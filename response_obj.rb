@@ -35,3 +35,16 @@ class StopPointResponseObj
     return output_hash_sorted
   end
 end
+
+class PostcodeResponseObj
+  def initialize(response_hash)
+    @response_hash = response_hash
+  end
+  def get_lat
+    return @response_hash["result"]["latitude"]
+  end
+
+  def get_long
+    return @response_hash["result"]["longitude"]
+  end
+end
