@@ -2,6 +2,10 @@ require 'httparty'
 require_relative 'make_url'
 require_relative 'response_obj'
 
+def get_coords_from_pc(postcode)
+  
+end
+
 
 puts "Enter post code (no spaces): "
 postcode = gets.chomp
@@ -26,25 +30,27 @@ tfl_loc_search_response = HTTParty.get(tfl_loc_search_url)
 tfl_loc_search_hash = JSON.parse(tfl_loc_search_response.body)
 stop_point_hash = tfl_loc_search_hash["stopPoints"]
 
+n=0
+
 for i in 0..100 do
+
+  break if i >= stop_point_hash.length
 
   tfl_req = Request.new("api.tfl.gov.uk", "StopPoint/", stop_point_hash[i]["naptanId"], "Arrivals")
   tfl_request_url = tfl_req.make_url
-  puts "Request url: #{tfl_request_url}"
 
   tfl_dir_response = HTTParty.get(tfl_request_url)
   tfl_response_hash = JSON.parse(tfl_dir_response.body)
 
   if tfl_response_hash == []
-    puts "No departures found for stop #{stop_point_hash[i]["naptanId"]}"
+    puts "No departures found for stop #{stop_point_hash[i]["naptanId"]} (#{stop_point_hash[i]["commonName"]})\n"
   else
-
     tfl_response_obj = StopPointResponseObj.new(tfl_response_hash)
 
     output_hash = tfl_response_obj.make_out_hash(5)
-    puts "For stop: #{stop_point_hash[i]["commonName"]} Which is #{stop_point_hash[i]["distance"]}m away:"
+    puts "For stop: #{stop_point_hash[i]["commonName"]}, which is #{stop_point_hash[i]["distance"].round}m away:"
 
-    for j in 0..4 do
+    for j in 0..3 do
 
       if j == 0
         puts "Next bus details:"
@@ -61,8 +67,11 @@ for i in 0..100 do
       puts "LineID: #{output_hash[arrives_in][0]}"
       puts "Destination: #{output_hash[arrives_in][1]}"
       puts "\n"
+
     end
+    n += 1
   end
+  break if n >= 2
 end
 
 
