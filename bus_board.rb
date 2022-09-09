@@ -69,6 +69,6 @@ for i in 0..100 do
 end
 
 if n_found == 0
-  puts "No stations found within radius"
+  puts "No departures found within radius"
 end
 

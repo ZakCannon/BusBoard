@@ -5,6 +5,11 @@ def get_coords_from_pc()
   puts "Enter post code: "
   postcode = gets.chomp
 
+  if postcode.match(/\W/)
+    puts "Not a valid postcode"
+    get_coords_from_pc()
+  end
+
   postcode = postcode.split(" ")
   postcode = postcode.join()
   postcodes_req = Request.new("api.postcodes.io", "postcodes/", postcode)
