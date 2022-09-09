@@ -1,4 +1,4 @@
-class StopPointResponseObj
+class StopPointResponse
   attr_reader :response_hash
 
   def initialize(response_hash)
@@ -33,23 +33,5 @@ class StopPointResponseObj
     output_hash_sorted = output_sorted.to_h
 
     return output_hash_sorted
-  end
-end
-
-class PostcodeResponseObj
-  def initialize(response_hash)
-    @response_hash = response_hash
-    @postcode = response_hash["result"]["postcode"]
-  end
-  def get_lat
-    return @response_hash["result"]["latitude"]
-  end
-
-  def get_long
-    return @response_hash["result"]["longitude"]
-  end
-
-  def get_region
-    return @response_hash["result"]["region"]
   end
 end

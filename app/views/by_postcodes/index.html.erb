@@ -1,0 +1,10 @@
+<h1>Postcode search</h1>
+
+<%= form_with url: "/by_postcodes/result", method: :get do |form| %>
+  <%= form.label :postcode, "Enter a postcode:" %>
+  <%= form.text_field :postcode, placeholder: "Eg. NW5 1TL" %>
+  <br>
+  <%= form.label :radius, "Enter a radius to search (in m):" %>
+  <%= form.text_field :radius, placeholder: "Eg. 300" %>
+  <%= form.submit "go" %>
+<% end %>

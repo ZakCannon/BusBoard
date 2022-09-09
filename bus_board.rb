@@ -27,14 +27,17 @@ end
 loc_coords = get_coords_from_pc()
 radius = parse_pos_int("Enter radius: ")
 
+#gets a list of stops in the radius as the big hash
 stop_point_hash = find_near_stop_points(loc_coords, radius)
 
 n_found=0
 
+#looping through the list of stops in stop_point_hash
 for i in 0..100 do
 
   break if i+1 >= stop_point_hash.length
 
+  #ask tfl when the busses are coming at the stop
   tfl_response_hash = ask_tfl_busses(stop_point_hash[i]["naptanId"])
 
   if tfl_response_hash == []
@@ -42,9 +45,16 @@ for i in 0..100 do
   else
     tfl_response_obj = StopPointResponseObj.new(tfl_response_hash)
 
-    output_hash = tfl_response_obj.make_out_hash(5)
+    begin
+      output_hash = tfl_response_obj.make_out_hash(4)
+    rescue NoMethodError
+      puts "here is the error"
+      puts "Something's gone wrong getting a response from tfl"
+    end
+
     puts "For stop: #{stop_point_hash[i]["commonName"]}, which is #{stop_point_hash[i]["distance"].round}m away: (#{i+1})"
 
+    #puts out the bus info if there is any
     for j in 0..3 do
 
       if j == 0
@@ -63,6 +73,8 @@ for i in 0..100 do
       puts "\n"
 
     end
+
+    #all these are to make sure we show enough stops
     n_found += 1
   end
   break if n_found >= 2
