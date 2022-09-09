@@ -22,16 +22,35 @@ class StopPointResponse
     return @response_hash[num]["timeToStation"]/60
   end
 
-  def make_out_hash(num)
-    output_hash = {}
+  def make_out_hash
+    output_hash_i = {}
 
-    for i in 0..(num-1) do
-      output_hash[self.get_time_to_arr(i)]= [self.get_bus_lineid(i), self.get_bus_dest(i)]
+    for i in 0..(@response_hash.length-1) do
+      output_hash_i[self.get_time_to_arr(i)]= [self.get_bus_lineid(i), self.get_bus_dest(i)]
+      puts "successfully grabbed info for bus #{i}"
     end
 
-    output_sorted = output_hash.sort
-    output_hash_sorted = output_sorted.to_h
+    output_sorted = output_hash_i.sort
+    output_hash = {}
 
-    return output_hash_sorted
+    rank = 0
+
+    output_sorted.each do |entry|
+      if entry[0] == 0
+        entry[0] = "Now!"
+      end
+
+      arr_hash = {
+        "arr_time" => entry[0],
+        "line_id" => entry[1][0],
+        "dest" => entry[1][1]
+      }
+
+      output_hash[rank] = arr_hash
+      rank += 1
+    end
+
+    puts "This is output_hash from the make out hash method #{output_hash}"
+    return output_hash
   end
 end

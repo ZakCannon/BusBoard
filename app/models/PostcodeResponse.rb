@@ -1,7 +1,6 @@
 class PostcodeResponse
   def initialize(response_hash)
     @response_hash = response_hash
-    @postcode = response_hash["result"]["postcode"]
   end
   def get_lat
     return @response_hash["result"]["latitude"]
@@ -13,5 +12,9 @@ class PostcodeResponse
 
   def get_region
     return @response_hash["result"]["region"]
+  end
+
+  def get_postcode
+    return @response_hash["result"]["postcode"]
   end
 end

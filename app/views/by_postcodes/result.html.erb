@@ -1,5 +1,26 @@
 <h1>Result page</h1>
 
-<%="You searched for #{@postcode}. Results:"%>
+<%="Showing closest stops that have departures within set radius:"%>
 <br>
-<%="result is #{@out_str}" %>
+
+<%i = 0 %>
+
+<%@stop_list.each do |stop|%>
+  <%="Results for stop #{@stop_list[i]}" %>
+  <table>
+    <tr>
+      <th>Due (mins)</th>
+      <th>Route</th>
+      <th>Destination</th>
+    </tr>
+    <%n_busses_found = @web_out_hash[stop].length - 1 %>
+    <%for j in 0..(n_busses_found) do%>
+      <tr>
+        <td><%=@web_out_hash[stop][j]["arr_time"]%></td>
+        <td><%=@web_out_hash[stop][j]["line_id"] %></td>
+        <td><%=@web_out_hash[stop][j]["dest"]%></td>
+      </tr>
+    <%end %>
+  </table>
+  <%i += 1 %>
+<%end %>
