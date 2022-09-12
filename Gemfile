@@ -69,3 +69,5 @@ group :test do
 end
 
 gem 'httparty'
+
+gem "bulma-rails", "~> 0.8.0"

@@ -22,7 +22,12 @@ class StopPointResponse
     return @response_hash[num]["timeToStation"]/60
   end
 
+  def get_stop_naptanid(num)
+    return @response_hash[num]["naptanId"]
+  end
+
   def make_out_hash
+
     output_hash_i = {}
 
     for i in 0..(@response_hash.length-1) do
@@ -48,6 +53,10 @@ class StopPointResponse
       output_hash[rank] = arr_hash
       rank += 1
     end
+
+    output_hash["naptanId"] = self.get_stop_naptanid(0)
+
+    puts output_hash
 
     return output_hash
   end

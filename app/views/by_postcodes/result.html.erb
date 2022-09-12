@@ -1,26 +1,39 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/index">
+      <img src="https://versions.bulma.io/0.7.0/images/bulma-logo.png" width="112" height="28">
+    </a>
+  </div>
+</nav>
+
 <h1>Result page</h1>
 
-<%="Showing closest stops that have departures within set radius:"%>
+<h2>Showing closest stops that have departures within set radius:</h2>
 <br>
 
 <%i = 0 %>
 
 <%@stop_list.each do |stop|%>
-  <%="Results for stop #{@stop_list[i]}" %>
-  <table>
-    <tr>
-      <th>Due (mins)</th>
-      <th>Route</th>
-      <th>Destination</th>
-    </tr>
-    <%n_busses_found = @web_out_hash[stop].length - 1 %>
-    <%for j in 0..(n_busses_found) do%>
+  <p>Results for stop <%=@stop_list[i] %>. Find additional info, eg map <a href="https://tfl.gov.uk/bus/stop/<%=@web_out_hash[stop]["naptanId"]%>">Here</a></p>
+  <table class = "table">
+    <thead>
       <tr>
-        <td><%=@web_out_hash[stop][j]["arr_time"]%></td>
-        <td><%=@web_out_hash[stop][j]["line_id"] %></td>
-        <td><%=@web_out_hash[stop][j]["dest"]%></td>
+        <th>Due (mins)</th>
+        <th>Route</th>
+        <th>Destination</th>
       </tr>
-    <%end %>
+    </thead>
+    <tbody>
+      <%n_busses_found = @web_out_hash[stop].length - 2 %>
+      <%for j in 0..(n_busses_found) do%>
+        <tr>
+          <td><%=@web_out_hash[stop][j]["arr_time"]%></td>
+          <td><%=@web_out_hash[stop][j]["line_id"] %></td>
+          <td><%=@web_out_hash[stop][j]["dest"]%></td>
+        </tr>
+      <%end %>
+    </tbody>
   </table>
   <%i += 1 %>
 <%end %>

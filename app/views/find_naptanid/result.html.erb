@@ -1,17 +1,29 @@
-<h1>Results</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/index">
+      <img src="https://versions.bulma.io/0.7.0/images/bulma-logo.png" width="112" height="28">
+    </a>
+  </div>
+</nav>
 
-<table>
-  <tr>
-    <th>Common Name</th>
-    <th>Naptan ID</th>
-  </tr>
-  <%n_stops_found = @stop_list_hash.length - 1 %>
-  <%for j in 0..(n_stops_found) do%>
+<h1>Results shown below. Select a naptanId to show departures from that stop</h1>
+
+<table class="table">
+  <thead>
     <tr>
-      <td><%=@stop_list_hash[j]["common name"]%></td>
-      <td><%=@stop_list_hash[j]["naptanId"] %></td>
+      <th>Common Name</th>
+      <th>Naptan ID</th>
     </tr>
-  <%end %>
-</table>
+  </thead>
+  <tbody>
+    <%n_stops_found = @stop_list_hash.length - 1 %>
+    <%for j in 0..(n_stops_found) do%>
+      <tr>
+        <td><%=@stop_list_hash[j]["common name"]%></td>
+        <td><a href="/by_stop/result?naptanId=<%=@stop_list_hash[j]["naptanId"] %>&commit=go"><%=@stop_list_hash[j]["naptanId"] %></a></td>
+      </tr>
+    <%end %>
+  </tbody>
 
-<p>Now you can look up departures using your naptan ID <a href="/by_stop/">Here</a></p>
+</table>
