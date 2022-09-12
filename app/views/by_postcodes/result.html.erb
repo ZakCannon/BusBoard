@@ -15,7 +15,7 @@
 <%i = 0 %>
 
 <%@stop_list.each do |stop|%>
-  <p>Results for stop <%=@stop_list[i] %>. Find additional info, eg map <a href="https://tfl.gov.uk/bus/stop/<%=@web_out_hash[stop]["naptanId"]%>">Here</a></p>
+  <p>Results for stop <%=@stop_list[i] %>. Find additional info, eg a map to the stop, visit <a href="https://tfl.gov.uk/bus/stop/<%=@web_out_hash[stop]["naptanId"]%>">Here</a></p>
   <table class = "table">
     <thead>
       <tr>
