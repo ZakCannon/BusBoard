@@ -1,13 +1,14 @@
 require 'request_manager'
 require 'result_generation'
 
-class ByPostcodesController < ApplicationController
+class FindNaptanidController < ApplicationController
   def index
   end
 
   def result
     @postcode = params[:postcode]
     @radius = params[:radius]
+
     def return_view_with_error_message(error_message)
       flash.alert= error_message
       render action: :index
@@ -25,12 +26,6 @@ class ByPostcodesController < ApplicationController
 
     return return_view_with_error_message("No bus stops found within radius") if stop_list_hash == []
 
-    web_out_hash = gen_display_hash_by_postcodes(stop_list_hash, 2)
-
-    @web_out_hash = web_out_hash
-    @stop_list =  web_out_hash.keys
-
-    flash.each { |type| flash.discard(type) }
-
+    @stop_list_hash = gen_display_hash_nearby_stops(stop_list_hash, 4)
   end
 end

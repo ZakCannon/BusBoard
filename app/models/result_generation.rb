@@ -3,7 +3,7 @@ class ResultGeneration
 end
 
 
-def gen_display_hash(stop_list_hash, len)
+def gen_display_hash_by_postcodes(stop_list_hash, len)
   n_found=0
   web_out_hash = {}
 
@@ -19,6 +19,18 @@ def gen_display_hash(stop_list_hash, len)
     #all these are to make sure we show enough stops
     n_found += 1
     break if n_found >= len
+  end
+
+  return web_out_hash
+end
+
+def gen_display_hash_nearby_stops(stop_list_hash, len)
+  web_out_hash = {}
+  i = 0
+
+  stop_list_hash.each do |stop|
+    web_out_hash[i] = {"naptanId" => stop["naptanId"],  "common name" => stop["commonName"]}
+    i += 1
   end
 
   return web_out_hash

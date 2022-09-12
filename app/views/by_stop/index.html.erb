@@ -1,0 +1,13 @@
+<h1>Stop search</h1>
+
+<%= form_with url: "/by_stop/result", method: :get do |form| %>
+  <%= form.label :naptanId, "Enter a stop naptanID:" %>
+  <%= form.text_field :naptanId, placeholder: "Eg. 490008660N" %>
+  <%= form.submit "go" %>
+<% end %>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<h1>Result page</h1>
+<%="You searched for naptanId: #{@naptanId}"%>
+
+<table>
+  <tr>
+    <th>Due (mins)</th>
+    <th>Route</th>
+    <th>Destination</th>
+  </tr>
+  <%n_busses_found = @web_out_hash.length - 1 %>
+  <%for j in 0..(n_busses_found) do%>
+    <tr>
+      <td><%=@web_out_hash[j]["arr_time"]%></td>
+      <td><%=@web_out_hash[j]["line_id"] %></td>
+      <td><%=@web_out_hash[j]["dest"]%></td>
+    </tr>
+  <%end %>
+</table>
