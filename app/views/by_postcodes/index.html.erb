@@ -8,3 +8,9 @@
   <%= form.text_field :radius, placeholder: "Eg. 300" %>
   <%= form.submit "go" %>
 <% end %>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>

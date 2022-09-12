@@ -29,15 +29,18 @@ class APIQueryList
   end
 end
 
+def ask_api(request)
+  req_url = request.make_url
+  req_response = HTTParty.get(req_url)
+  return JSON.parse(req_response.body)
+end
+
 def find_near_stop_points(loc_coords, radius)
   tfl_loc_search_qlist = APIQueryList.new({"stopTypes" => "NaptanPublicBusCoachTram", "modes" => "bus", "radius" => radius, "lon" => loc_coords[1], "lat" => loc_coords[0]})
   tfl_loc_search_outlist = tfl_loc_search_qlist.make_list
   tfl_loc_search_req = RequestManager.new("api.tfl.gov.uk", "StopPoint", tfl_loc_search_outlist)
-  tfl_loc_search_url = tfl_loc_search_req.make_url
 
-
-  tfl_loc_search_response = HTTParty.get(tfl_loc_search_url)
-  tfl_loc_search_hash = JSON.parse(tfl_loc_search_response.body)
+  tfl_loc_search_hash = ask_api(tfl_loc_search_req)
   stop_point_hash = tfl_loc_search_hash["stopPoints"]
 
   return stop_point_hash
@@ -45,10 +48,19 @@ end
 
 def ask_tfl_busses(naptanId)
   tfl_req = RequestManager.new("api.tfl.gov.uk", "StopPoint/", naptanId, "Arrivals")
-  tfl_request_url = tfl_req.make_url
+  return ask_api(tfl_req)
+end
 
-  tfl_dir_response = HTTParty.get(tfl_request_url)
-  tfl_response_hash = JSON.parse(tfl_dir_response.body)
 
-  return tfl_response_hash
+def get_pc_details(postcode1)
+  postcode = postcode1.split(" ")
+  postcode = postcode.join()
+  postcodes_req = RequestManager.new("api.postcodes.io", "postcodes/", postcode)
+
+  pc_response_hash = ask_api(postcodes_req)
+  if pc_response_hash["status"] == 404
+    return nil
+  else
+    return PostcodeResponse.new(pc_response_hash)
+  end
 end
