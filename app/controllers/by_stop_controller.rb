@@ -12,9 +12,7 @@ class ByStopController < ApplicationController
       render action: :index
     end
 
-    puts ask_tfl_busses(@naptanId).class
-
-    return return_view_with_error_message("not a valid naptan ID") if ask_tfl_busses(@naptanId).class == Hash
+    return return_view_with_error_message("not a valid naptan ID") if ask_tfl_busses(@naptanId).class == Hash or ask_tfl_busses(@naptanId) == nil
 
     tfl_response_obj = StopPointResponse.new(ask_tfl_busses(@naptanId))
 
