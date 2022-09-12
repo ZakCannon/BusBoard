@@ -27,7 +27,6 @@ class StopPointResponse
 
     for i in 0..(@response_hash.length-1) do
       output_hash_i[self.get_time_to_arr(i)]= [self.get_bus_lineid(i), self.get_bus_dest(i)]
-      puts "successfully grabbed info for bus #{i}"
     end
 
     output_sorted = output_hash_i.sort
@@ -50,7 +49,6 @@ class StopPointResponse
       rank += 1
     end
 
-    puts "This is output_hash from the make out hash method #{output_hash}"
     return output_hash
   end
 end
